@@ -3,8 +3,8 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.rjfun.cordova.smartadserver"
-	version="1.0.1">
-      
+	version="1.0.2">
+
     <name>Smart Ad Server</name>
 	<description>Cordova/PhoneGap Plugin for Smart Ad Server</description>
 	<author>Liming Xie</author>
@@ -22,13 +22,13 @@
     </js-module>
 
 	<dependency id="com.rjfun.cordova.extension" />
-	
+
     <!-- android -->
     <platform name="android">
         <framework src="com.google.android.gms:play-services-ads:+" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
+			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
 			    android:name="com.google.android.gms.ads.AdActivity"
 			    android:theme="@android:style/Theme.Translucent" />
           </config-file>
