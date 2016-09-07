@@ -26,9 +26,11 @@
 
 @property (nonatomic, retain) NSString* mBannerPageId;
 @property (assign) int mBannerFormatId;
+@property (nonatomic, retain) NSString* mBannerTarget;
 
 @property (nonatomic, retain) NSString* mInterstitialPageId;
 @property (assign) int mInterstitialFormatId;
+@property (nonatomic, retain) NSString* mInterstitialTarget;
 
 @end
 
@@ -74,14 +76,22 @@
     [SASAdView setSiteID:self.mSiteId baseURL:self.mBaseURL];
 }
 
-- (UIView*) __createAdView:(NSString*)adId {
-    
+- (UIView*) __createAdView:(NSString*)data {
+
+    NSArray* datafields = [data componentsSeparatedByString:@"?"];
+    NSString* adId = [datafields objectAtIndex:0];
+    self.mBannerTarget = nil;
+
+    if([datafields count] >= 2) {
+        self.mBannerTarget = [datafields objectAtIndex:1];
+    }
+
     NSArray* fields = [adId componentsSeparatedByString:@"/"];
     if([fields count] >= 2) {
         self.mBannerPageId = [fields objectAtIndex:0];
         self.mBannerFormatId = [[fields objectAtIndex:1] intValue];
     }
-    
+
     UIView * parentView = [self getView];
     CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, BANNER_AD_HEIGHT);
     SASBannerView *ad = [[SASBannerView alloc] initWithFrame:rect
@@ -90,18 +100,18 @@
     ad.expandsFromTop = YES;
     ad.modalParentViewController = [self getViewController];
     ad.delegate = self;
-    
+
     return ad;
 }
 
 - (void) __showBanner:(int) position atX:(int)x atY:(int)y
 {
     SASBannerView* ad = (SASBannerView*) self.banner;
-    
+
     if([self __isLandscape]) {
     } else {
     }
-    
+
     [super __showBanner:position atX:x atY:y];
 }
 
@@ -114,7 +124,7 @@
 }
 
 - (void) __loadAdView:(UIView*)view {
-    
+
     if(self.isTesting) NSLog(@"__loadAdView");
 
     SASBannerView* ad = (SASBannerView*) view;
@@ -122,7 +132,7 @@
         [ad loadFormatId:self.mBannerFormatId
                   pageId:self.mBannerPageId
                   master:YES
-                  target:nil];
+                  target:self.mBannerTarget];
     }
 }
 
@@ -135,20 +145,29 @@
 - (void) __destroyAdView:(UIView*)view {
     if(! view) return;
     [view removeFromSuperview];
-    
+
     SASBannerView* ad = (SASBannerView*) view;
     ad.delegate = nil;
     ad.modalParentViewController = nil;
     ad = nil;
 }
 
-- (NSObject*) __createInterstitial:(NSString*)adId {
+- (NSObject*) __createInterstitial:(NSString*)data {
+
+    NSArray* datafields = [data componentsSeparatedByString:@"?"];
+    NSString* adId = [datafields objectAtIndex:0];
+    self.mInterstitialTarget = nil;
+
+    if([datafields count] >= 2) {
+        self.mInterstitialTarget = [datafields objectAtIndex:1];
+    }
+
     NSArray* fields = [adId componentsSeparatedByString:@"/"];
     if([fields count] >= 2) {
         self.mInterstitialPageId = [fields objectAtIndex:0];
         self.mInterstitialFormatId = [[fields objectAtIndex:1] intValue];
     }
-    
+
     UIView * parentView = [self getView];
     SASInterstitialView *ad = [[SASInterstitialView alloc] initWithFrame:parentView.bounds
                                                                   loader:SASLoaderNone];
@@ -165,7 +184,7 @@
         [ad loadFormatId:self.mInterstitialFormatId
                   pageId:self.mInterstitialPageId
                   master:YES
-                  target:nil
+                  target:self.mInterstitialTarget
                  timeout:10 ];
     }
 }
@@ -223,7 +242,7 @@
 
 //Called when the SASAdView instance failed to download the ad
 - (void)adViewDidFailToLoad:(SASAdView *)adView error:(NSError *)error {
-    
+
     NSLog(@"%d - %@", (int)error.code, [error localizedDescription]);
 
     if([adView isKindOfClass:[SASBannerView class]]) {
