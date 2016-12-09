@@ -13,6 +13,7 @@
 #define kSASRefreshIntervalOff		(-1)
 #define kSASRefreshIntervalMiminum	20
 
+
 /** The SASBannerView class provides a wrapper view that displays an ad banner to the user.
  
  When the user taps a SASBannerView instance, the view triggers an action programmed into the advertisement.
@@ -44,7 +45,7 @@
  
  */
 
-@property (assign) BOOL expandsFromTop;
+@property (nonatomic, assign) BOOL expandsFromTop;
 
 /**
  * Starts or stops the auto refresh of ads on this SASBannerView by setting
@@ -55,6 +56,7 @@
  */
 
 @property (nonatomic, assign) NSInteger refreshInterval;
+
 
 ///-----------------------------------
 /// @name Creating a banner view
@@ -68,7 +70,7 @@
  
  */
 
-- (id)initWithFrame:(CGRect)frame;
+- (nonnull id)initWithFrame:(CGRect)frame;
 
 /** Initializes and returns a SASBannerView object for the given frame, and optionally sets a loader on it.
  
@@ -77,7 +79,6 @@
  
 	typedef enum {
  SASLoaderNone,
- SASLoaderLaunchImage,
  SASLoaderActivityIndicatorStyleBlack,
  SASLoaderActivityIndicatorStyleWhite,
  SASLoaderActivityIndicatorStyleTransparent
@@ -86,10 +87,6 @@
  `SASLoaderNone`
  
  Default loader. No loader is displayed.
- 
- `SASLoaderLaunchImage`
- 
- *Deprecated* The launch image is used for the loader.
  
  `SASLoaderActivityIndicatorStyleBlack`
  
@@ -105,7 +102,7 @@
  
  */
 
-- (id)initWithFrame:(CGRect)frame loader:(SASLoader)loaderType;
+- (nonnull id)initWithFrame:(CGRect)frame loader:(SASLoader)loaderType;
 
 
 /** Whether the ad should stay in place (more often for a banner) or be removed after a certain duration.
@@ -128,22 +125,20 @@
 
 - (void)refresh;
 
+///-----------------------------------------
+/// @name Displaying a banner at proper size
+///-----------------------------------------
 
-///-------------------------------------------
-/// @name Interacting with the banner view
-///-------------------------------------------
-
-/** *Deprecated* Gives an ad for the banner view to display.
- Use this method if you want your application to provide a local SmartAdServerAd (usually in case of error).
+/** Returns the recommanded height to display the adView in a given container, according to the ad aspect ratio.
  
- @param adBanner A SASAd created by your application. This object is retained by the ad banner view.
+ If no ad is loaded, this method will return its initialization frame height for standard UIView container and will return 0 for UITableView and UICollectionView containers.
  
- @warning Deprecated since the iOS Display SDK 4.5, please use addSubview:.
+ @param container the container in which the ad will be displayed (if nil, the current window will be used instead)
+ 
+ @return the optimized height for the adView
  
  */
 
-- (void)displayThisAd:(SASAd *)adBanner __attribute__((availability(ios,
-																	deprecated=4.5,
-																	message="This method will be removed in the SAS iOS SDK 5.1 and later")));
+- (CGFloat)optimalAdViewHeightForContainer:(nullable UIView *)container;
 
 @end

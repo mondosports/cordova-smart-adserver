@@ -12,20 +12,17 @@
 #import "SASAdViewDelegate.h"
 
 #define kSASSDKName							@"SDKiOS"
-#define kSASSDKVersion						@"5.0"
-#define kSASSDKRev                          @"3735343832"
+#define kSASSDKVersion						@"6.5"
+#define kSASSDKRev                          @"65343132616361633966313530643539663064333735323866346238613539653264333437633931"
 
 #define kSASCloseLinearMessage				@"closeLinear"
 
 
-typedef void(^DismissalAnimations)(SASAdView *adView);
+typedef void(^_Nullable DismissalAnimations)(SASAdView * _Nonnull adView);
 
 typedef NS_ENUM(NSInteger, SASLoader) {
     SASLoaderNone,
-	SASLoaderLaunchImage __attribute__((availability(ios,
-													 deprecated=4.5,
-													 message="This attribute will be removed in the SAS iOS SDK 5.1 and later"))),//"first deprecated in the SAS SDK 4.5 - " = SASLoaderNone,
-    SASLoaderActivityIndicatorStyleBlack,
+	SASLoaderActivityIndicatorStyleBlack,
     SASLoaderActivityIndicatorStyleWhite,
     SASLoaderActivityIndicatorStyleTransparent
 };
@@ -48,7 +45,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-@class SmartAdServerAd, SASRequestManager, SASORMMAController, SASLoaderView, SASMRAIDBridge, SASAdViewController;
+@class SASRequestManager, SASLoaderView, SASMRAIDBridge, SASAdViewController;
 @interface SASAdView : UIView
 
 
@@ -64,7 +61,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-@property (nonatomic, assign) id <SASAdViewDelegate> delegate;
+@property (nonatomic, weak, nullable) id <SASAdViewDelegate> delegate;
 
 
 /** The modal parent view controller is used to present the modal view controller following the ad's click.
@@ -75,7 +72,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-@property (nonatomic, assign) UIViewController *modalParentViewController;
+@property (nonatomic, weak, nullable) UIViewController *modalParentViewController;
 
 
 /** Whether the ad should stay in place (typically a banner) or be removed after a certain duration (typically an interstitial).
@@ -93,7 +90,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-@property (assign) BOOL expandsFromTop;
+@property (nonatomic, assign) BOOL expandsFromTop;
 
 
 /** The animations used to dismiss the ad view.
@@ -126,7 +123,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-+ (void)setSiteID:(NSInteger)siteID baseURL:(NSString *)baseURL;
++ (void)setSiteID:(NSInteger)siteID baseURL:(nonnull NSString *)baseURL;
 
 
 /** Sets the base URL for the ad call.
@@ -137,38 +134,10 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-+ (void)setBaseURL:(NSString *)baseURL;
++ (void)setBaseURL:(nonnull NSString *)baseURL;
 
 
-/** *Deprecated* Specifies the device's coordinate.
- 
- Use this method if you want to provide geo-targeted advertisement.
- For example in your CLLocationManagerDelegate:
- 
-     - (void)locationManager:(CLLocationManager *)locationManager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-         [SASAdView setCoordinate:newLocation.coordinate];
-     }
- 
- If used, this method should be called as often as possible in order to provide up to date geo-targeting.
- The accuracy will be set to -1 if using an MRAID creative.
- 
- @warning *Important:* your application can be rejected by Apple if you use the device&rsquo;s location *only* for advertising.
- Your application needs to have a feature (other than advertising) using geo-location in order to be allowed to ask for the device&rsquo;s position.
- 
- @param coordinate The device's coordinate
- 
- @warning *This method has been deprecated*, please use
- setLocation:
- 
- @see setLocation:
- */
-
-+ (void)setCoordinate:(CLLocationCoordinate2D)coordinate __attribute__((availability(ios,
-																					 deprecated=4.0,
-																					 message="This method will be removed in the SAS iOS SDK 5.0 and later")));
-
-
-/** Specifies the device's location. This object incorporates the geographical coordinates and altitude of the device???s location along with values indicating 
+/** Specifies the device's location. This object incorporates the geographical coordinates and altitude of the device???s location along with values indicating
  the accuracy of the measurements and when those measurements were made.
  
  Use this method if you want to provide geo-targeted advertisement.
@@ -186,7 +155,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  @param location The device's location.
  */
 
-+ (void)setLocation:(CLLocation *)location;
++ (void)setLocation:(nonnull CLLocation *)location;
 
 
 /** Specifies the device's heading.
@@ -238,6 +207,17 @@ typedef NS_ENUM(NSInteger, SASLoader) {
 + (void)setLoggingEnabled:(BOOL)loggingEnabled;
 
 
+/** Enables the transient session ID (default value: YES / enabled).
+ 
+ Passing YES will enable the transient session ID which will be generated if the IDFA is not valid.
+ This transient session ID is used only for insertion capping/linking. It will not be shared with any other apps and will be
+ automatically reset frequently.
+ 
+ */
+
++ (void)setTransientSessionIDEnabled:(BOOL)transientIDEnabled;
+
+
 /** Enables the hashed mode for the UDID in the ad requests.
  
  Calling this method will cause the UDID to be hashed by the SDK when requesting an advertisement.
@@ -247,6 +227,16 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  */
 
 + (void)enableIdentifierHashing;
+
+
+/** Handle custom URLs for LivePreview.
+ 
+ DOC TO BE COMPLETED
+ 
+ */
+
++ (BOOL)handleOpenURL:(nonnull NSURL *)url;
+
 
 ///-----------------------------------
 /// @name Creating ad views
@@ -261,7 +251,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
 
  */
 
-- (id)initWithFrame:(CGRect)frame;
+- (nonnull id)initWithFrame:(CGRect)frame;
 
 
 /** *Deprecated* Initializes and returns a SASAdView object for the given frame, and optionally sets a loader on it.
@@ -271,7 +261,6 @@ typedef NS_ENUM(NSInteger, SASLoader) {
 
 	typedef enum {
 		SASLoaderNone,
-		SASLoaderLaunchImage,
 		SASLoaderActivityIndicatorStyleBlack,
 		SASLoaderActivityIndicatorStyleWhite,
 		SASLoaderActivityIndicatorStyleTransparent
@@ -280,10 +269,6 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  `SASLoaderNone`
  
  Default loader. No loader is displayed.
- 
- `SASLoaderLaunchImage`
- 
- *Deprecated* The launch image is used for the loader.
  
  `SASLoaderActivityIndicatorStyleBlack`
  
@@ -301,53 +286,8 @@ typedef NS_ENUM(NSInteger, SASLoader) {
 
  */
 
-- (id)initWithFrame:(CGRect)frame loader:(SASLoader)loaderType;
+- (nonnull id)initWithFrame:(CGRect)frame loader:(SASLoader)loaderType;
 
-
-/** *Deprecated* Initializes and returns a SASAdView object for the given frame, and optionally sets a loader on it and hides the status bar.
- 
- You can use this method to display interstitials in full screen mode, even if you have a status bar. The ad view will remove the status bar, and replace it when the ad duration is over, or when the user dimisses the ad by taping on it, or on the skip button.
- 
- @param frame A rectangle specifying the initial location and size of the ad view in its superview's coordinates. The frame of the table view changes when it loads an expand format.
- @param loaderType An SASLoader that determines which loader the view should display while downloading the ad. It can take the following values:
- 
-	typedef enum {
-		SASLoaderNone,
-		SASLoaderLaunchImage,
-		SASLoaderActivityIndicatorStyleBlack,
-		SASLoaderActivityIndicatorStyleWhite,
-		SASLoaderActivityIndicatorStyleTransparent
-	} SASLoader;
- 
- `SASLoaderNone`
- 
- Default loader. No loader is displayed.
- 
- `SASLoaderLaunchImage`
- 
- *Deprecated* The launch image is used for the loader.
- 
- `SASLoaderActivityIndicatorStyleBlack`
- 
- The loader consists of a black view with a yellow loader.
- 
- `SASLoaderActivityIndicatorStyleWhite`
- 
- The loader consists of a white view with a yellow loader.
- 
- `SASLoaderActivityIndicatorStyleTransparent`
-
- The loader consists of a black semi-transparent view with a yellow loader.
- 
- @param hideStatusBar A boolean value indicating the SASAdView object to auto hide the status bar if needed when the ad is displayed.
- @warning Your application should support auto-resizing without the status bar. Some ads can have a transparent background, and if your application doesn't resize, 
- the user will see a blank 20px frame on top of your app.
- 
- @warning This method is deprecated, please call initWithFrame: or initWithFrame:loader: instead from a SASBannerView or a SASInterstitialView instance.
-
- */
-
-- (id)initWithFrame:(CGRect)frame loader:(SASLoader)loaderType hideStatusBar:(BOOL)hideStatusBar;
 
 ///-----------------------------------
 /// @name Loading ad data
@@ -366,9 +306,9 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  */
 
 - (void)loadFormatId:(NSInteger)formatId
-			  pageId:(NSString *)pageId
+			  pageId:(nonnull NSString *)pageId
 			  master:(BOOL)isMaster
-			  target:(NSString *)target;
+			  target:(nullable NSString *)target;
 
 
 /** Fetches an ad from Smart AdServer with a specified timeout.
@@ -387,9 +327,9 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  */
 
 - (void)loadFormatId:(NSInteger)formatId
-			  pageId:(NSString *)pageId
+			  pageId:(nonnull NSString *)pageId
 			  master:(BOOL)isMaster
-			  target:(NSString *)target
+			  target:(nullable NSString *)target
 			 timeout:(float)timeout;
 
 
@@ -430,22 +370,7 @@ typedef NS_ENUM(NSInteger, SASLoader) {
  
  */
 
-- (void)sendMessageToWebView:(NSString *)message;
+- (void)sendMessageToWebView:(nonnull NSString *)message;
 
-
-/** *Deprecated* Removes the ad interstitial view.
- 
- Call this method to remove the advertisement from its subview.
- The view's disparition will be animated according to the advertiser's settings.
- 
- @warning This method doesn't remove ads having their unlimited attribute set to YES.
-
- @warning Deprecated since iOS Display SDK 4.5, please use removeFromSuperview.
-
- */
-
-- (void)dismiss __attribute__((availability(ios,
-											deprecated=4.5,
-											message="This method will be removed in the SAS iOS SDK 5.1 and later")));
 
 @end

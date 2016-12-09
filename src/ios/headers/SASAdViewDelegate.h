@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SASVideoEvent.h"
+
 
 /**
  
@@ -18,7 +20,7 @@
  
  */
 
-@class SASAdView, SASAd, SmartAdServerAd;
+@class SASAdView, SASAd;
 
 @protocol SASAdViewDelegate <NSObject>
 
@@ -37,25 +39,8 @@
  
 */
 
-- (void)adView:(SASAdView *)adView didDownloadAd:(SASAd *)ad;
+- (void)adView:(nonnull SASAdView *)adView didDownloadAd:(nonnull SASAd *)ad;
 
-
-/** *Deprecated* Notifies the delegate that the ad json has been received and fetched and that it will launch its download.
- 
- It lets you know what the ad data is so you can adapt your ad behavior. See the SmartAdServerAd Class Reference for more information.
- 
- @param adView An ad view informing the delegate about the ad data being fetched.
- @param adData A SmartAdServerAd object.
- 
- @warning Deprecated since iOS Display SDK 4.5, please use
- adView:didDownloadAd:
- 
- @see adView:didDownloadAd:
- */
-
-- (void)adView:(SASAdView *)adView didDownloadAdData:(SmartAdServerAd *)adData __attribute__((availability(ios,
-																										   deprecated=4.5,
-																										   message="This method will be removed in the SAS iOS SDK 5.1 and later")));
 
 /** Notifies the delegate that the creative from the current ad has been loaded and displayed.
  
@@ -64,7 +49,7 @@
  
  */
 
-- (void)adViewDidLoad:(SASAdView *)adView;
+- (void)adViewDidLoad:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the SASAdView failed to download the ad.
@@ -80,7 +65,7 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didFailToLoadWithError:(NSError *)error;
+- (void)adView:(nonnull SASAdView *)adView didFailToLoadWithError:(nonnull NSError *)error;
 
 
 /** Notifies the delegate that the creative from the current ad has been prefetched in cache.
@@ -89,7 +74,7 @@
  
  */
 
-- (void)adViewDidPrefetch:(SASAdView *)adView;
+- (void)adViewDidPrefetch:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the SASAdView failed to prefetch the ad in cache.
@@ -104,7 +89,7 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didFailToPrefetchWithError:(NSError *)error;
+- (void)adView:(nonnull SASAdView *)adView didFailToPrefetchWithError:(nonnull NSError *)error;
 
 
 /** Notifies the delegate that the SASAdView which displayed an expandable ad did collapse.
@@ -118,7 +103,7 @@
  
  */
 
-- (void)adViewDidCollapse:(SASAdView *)adView;
+- (void)adViewDidCollapse:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the SASAdView has been dismissed.
@@ -136,7 +121,7 @@
  
  */
 
-- (void)adViewDidDisappear:(SASAdView *)adView;
+- (void)adViewDidDisappear:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that a modal view will appear to display the ad's redirect URL web page if appropriate.
@@ -147,7 +132,7 @@
 
  */
 
-- (void)adViewWillPresentModalView:(SASAdView *)adView;
+- (void)adViewWillPresentModalView:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the modal view will be dismissed.
@@ -156,19 +141,7 @@
 
  */
 
-- (void)adViewWillDismissModalView:(SASAdView *)adView;
-
-
-/** Asks the delegate for a View Controller to manage the modal view that displays the redirect URL.
- 
- @param adView An ad view object asking the delegate for a UIViewController.
- @return A view controller able to manage the modal view.
- 
- */
-
-- (UIViewController *)viewControllerForAdView:(SASAdView *)adView __attribute__((availability(ios,
-                                                                                              deprecated=5.0,
-                                                                                              message="This method will be removed in future versions")));
+- (void)adViewWillDismissModalView:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that an ad action has been made (for example the user tapped the ad).
@@ -178,9 +151,16 @@
  @param adView An ad view object informing the delegate about the ad being clicked.
  @param willExit Whether the user chooses to leave the app.
  
+ @warning *This method has been deprecated.*
+ 
+ - if you want to know if the application is exiting, use UIApplicationDelegate methods instead.
+ - if you want to know if an adview is tapped, implement the adView:shouldHandleURL: method
+ 
  */
 
-- (void)adView:(SASAdView *)adView willPerformActionWithExit:(BOOL)willExit;
+- (void)adView:(nonnull SASAdView *)adView willPerformActionWithExit:(BOOL)willExit  __attribute__((availability(ios,
+                                                                                                                 deprecated=6.2,
+                                                                                                                 message="This method will be removed in future versions")));
 
 
 /** Asks the delegate whether to execute the ad action.
@@ -195,7 +175,7 @@
  
  */
 
-- (BOOL)adView:(SASAdView *)adView shouldHandleURL:(NSURL *)URL;
+- (BOOL)adView:(nonnull SASAdView *)adView shouldHandleURL:(nonnull NSURL *)URL;
 
 
 /** Returns the animations used to dismiss the ad view.
@@ -205,7 +185,7 @@
  
  */
 
-- (NSTimeInterval)animationDurationForDismissingAdView:(SASAdView *)adView;
+- (NSTimeInterval)animationDurationForDismissingAdView:(nonnull SASAdView *)adView;
 
 
 /** Returns the animations used to dismiss the ad view.
@@ -215,7 +195,7 @@
  
  */
 
-- (UIViewAnimationOptions)animationOptionsForDismissingAdView:(SASAdView *)adView;
+- (UIViewAnimationOptions)animationOptionsForDismissingAdView:(nonnull SASAdView *)adView;
 
 
 // MRAID Delegate Methods
@@ -228,7 +208,7 @@
  
  */
 
-- (void)adView:(SASAdView *)adView willResizeWithFrame:(CGRect)frame;
+- (void)adView:(nonnull SASAdView *)adView willResizeWithFrame:(CGRect)frame;
 
 
 /** Notifies the delegate that the ad view was resized.
@@ -239,7 +219,7 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didResizeWithFrame:(CGRect)frame;
+- (void)adView:(nonnull SASAdView *)adView didResizeWithFrame:(CGRect)frame;
 
 
 /** Notifies the delegate that the ad view was resized.
@@ -249,7 +229,7 @@
  You may specify nil for this parameter if you do not want the error information.
  
  */
-- (void)adViewDidFailToResize:(SASAdView *)adView error:(NSError *)error;
+- (void)adViewDidFailToResize:(nonnull SASAdView *)adView error:(nonnull NSError *)error;
 
 
 /** Notifies the delegate that the resized ad was closed.
@@ -259,24 +239,7 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didCloseResizeWithFrame:(CGRect)frame;
-
-
-/** *Deprecated* Notifies the delegate that the ad view is about to be expanded.
- 
- @param adView The ad view to be expanded.
- @param frame The frame of the ad view before expanding.
- @warning This method is not only called the first time an ad creative is expanded, but also when the user rotates the device.
- 
- @warning Deprecated since iOS Display SDK 4.5, please use
- adViewWillExpand:
- 
- @see adViewWillExpand:
- */
-
-- (void)adView:(SASAdView *)adView willExpandWithFrame:(CGRect)frame __attribute__((availability(ios,
-																								 deprecated=4.5,
-																								 message="This method will be removed in the SAS iOS SDK 5.1 and later")));
+- (void)adView:(nonnull SASAdView *)adView didCloseResizeWithFrame:(CGRect)frame;
 
 
 /** Notifies the delegate that the ad view is about to be expanded.
@@ -286,7 +249,7 @@
  
  */
 
-- (void)adViewWillExpand:(SASAdView *)adView;
+- (void)adViewWillExpand:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the ad view was expanded.
@@ -297,7 +260,16 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didExpandWithFrame:(CGRect)frame;
+- (void)adView:(nonnull SASAdView *)adView didExpandWithFrame:(CGRect)frame;
+
+
+/** Notifies the delegate that the expanded ad is about to be closed.
+ 
+ @param adView The expanded ad view that is about to be closed.
+ 
+ */
+
+- (void)adViewWillCloseExpand:(nonnull SASAdView *)adView;
 
 
 /** Notifies the delegate that the expanded ad was closed.
@@ -307,7 +279,8 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didCloseExpandWithFrame:(CGRect)frame;
+
+- (void)adView:(nonnull SASAdView *)adView didCloseExpandWithFrame:(CGRect)frame;
 
 
 /** Notifies the delegate that the ad view received a message from the MRAID creative.
@@ -320,6 +293,114 @@
  
  */
 
-- (void)adView:(SASAdView *)adView didReceiveMessage:(NSString *)message;
+- (void)adView:(nonnull SASAdView *)adView didReceiveMessage:(nonnull NSString *)message;
+
+
+/** Returns the visibility percentage of the ad view
+ 
+ Implement this method if you want to override the banner visibility.
+ 
+ @param adView The ad view object on which the visibility percentage will occur
+ @return Visibility percentage value between 0 and 1.
+ @warning Visibility is already computed by Smart AdServer SDK, override only if one case is not cover by this computation.
+ @warning This method is called each 500ms by Smart AdServer SDK, do not perform heavy computation.
+ 
+ */
+
+- (CGFloat)visibilityPercentageForAdView:(nonnull SASAdView *)adView;
+
+
+#pragma mark - Sticky Ads in ScrollViews
+
+/** Notifies the delegate that the ad view stuck/unstuck one of its subview to the view hierarchy.
+ 
+ This method will only be called when the SASAdView is added to a scrollview instance (UITableView, UICollectionView...) and only for ads format with the stickToTop feature.
+ Implement this method if you want to be able to modify the frame of the sticked view, for example if your UINavigationBar disappears at some point of the scroll, etc...
+ 
+ @param adView the sending adView.
+ @param stickView the view instance that is stuck/unstuck to the UIWindow
+ @param stuck true if the view is stuck, false if the view is not stuck anymore
+ @param frame the frame of the stickyView.
+ @warning This method is not only called the first time an ad creative is expanded, but also when the user rotates the device.
+ 
+ */
+
+- (void)adView:(nonnull SASAdView *)adView withStickyView:(nonnull UIView *)stickyView didStick:(BOOL)stuck withFrame:(CGRect)stickyFrame;
+
+
+/** Ask the delegate wether the adView can stick to top or not
+ 
+ This method will be called when the SASAdView is binded to a scrollview instance (UITableView, UICollectionView...) and when stick to top conditions are met : ads format with this feature, scrollview offset reaching top of the screen, etc.
+ Implement this method if you want to be able to prevent an ad from sticking to top : for example, if you store several adviews in the same controller and display only some of them, etc...
+ 
+ @param adView the sending adView.
+ @warning This method is not only called the first time stick to top conditions are met but every time until ad is stuck.
+ 
+ */
+
+- (BOOL)adViewCanStickToTop:(nonnull SASAdView *)adView;
+
+
+#pragma mark - Native Audio Playback
+
+/** Tells the ad view if it should handle AVAudioSession on its own when playing native (audio/video) ads.
+ 
+ Implement this method and return NO if you want to override ad view's behavior with AVAudioSession.
+ 
+ Use the adViewWillPlayAudio: and adViewDidFinishPlayingAudio: methods to implement your own behavior.
+ 
+ @param adView The ad view object on which is going to interact with AVAudioSession.
+ @return YES (default if not implemented) to let ad view handle AVAudioSession for native videos, NO to implement your own behavior.
+ 
+ @warning Disabling AVAudioSession handling can prevent the SDK to change the volume for a creative or to display mute/unmute buttons on some formats.
+ 
+ */
+
+- (BOOL)adViewShouldHandleAudioSession:(nonnull SASAdView *)adView;
+
+
+/** Notifies the delegate that the ad view will start playing native audio.
+ 
+ Implement this method if you want to know when an ad view starts playing native audio (e.g. from a native video). 
+ This is useful if you want to pause your own audio, change the shared AudioSession or trigger other custom behavior.
+ 
+ @param adView The ad view object which is going to play audio.
+ 
+ @warning This method will only be triggered by native creatives, not by HTML based creatives.
+ 
+ */
+
+- (void)adViewWillPlayAudio:(nonnull SASAdView *)adView;
+
+
+/** Notifies the delegate that the ad view finished playing native audio.
+ 
+ Implement this method if you want to know when an ad view finishes playing native audio (e.g. from a native video).
+ This is useful if you want to resume your own audio, change the shared AudioSession or trigger other custom behavior.
+ 
+ @param adView The ad view object which finished playing audio.
+ 
+ @warning This method will only be triggered by native creatives, not by HTML based creatives.
+ 
+ */
+
+- (void)adViewDidFinishPlayingAudio:(nonnull SASAdView *)adView;
+
+
+/** Notifies the delegate that a video event has been generated by the ad view.
+ 
+ Implement this method if you want to know when some events are reached when a video is played.
+ This can be useful if you want to implement specific app behavior when the user interact with the video or when he
+ reach a certain point of the video (for instance, to implement a rewarded video scheme in a game, using the event
+ SASVideoEventComplete).
+ 
+ @param adView The ad view currently playing the video.
+ @param videoEvent The video event.
+ 
+ @warning This method will only be triggered by native creatives, not by HTML based creatives.
+ 
+ */
+
+- (void)adView:(nonnull SASAdView *)adView didSendVideoEvent:(SASVideoEvent)videoEvent;
 
 @end

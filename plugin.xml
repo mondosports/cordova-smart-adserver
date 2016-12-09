@@ -50,41 +50,66 @@
 
     <!-- ios -->
     <platform name="ios">
-         <config-file target="config.xml" parent="/*">
-             <feature name="SmartAdServer">
-                 <param name="ios-package" value="SmartAdServerPlugin" />
-             </feature>
-         </config-file>
+        <config-file target="config.xml" parent="/*">
+        <feature name="SmartAdServer">
+            <param name="ios-package" value="SmartAdServerPlugin" />
+        </feature>
+        </config-file>
 
-         <config-file target="*-Info.plist" parent="CFBundleAllowMixedLocalizations">
+        <config-file target="*-Info.plist" parent="CFBundleAllowMixedLocalizations">
             <true/>
-         </config-file>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>youtube</string>
+            </array>
+        </config-file>
 
         <header-file src="src/ios/SmartAdServerPlugin.h"/>
-         <source-file src="src/ios/SmartAdServerPlugin.m"/>
+        <source-file src="src/ios/SmartAdServerPlugin.m"/>
 
-         <header-file src="src/ios/headers/SASAd.h"/>
-         <header-file src="src/ios/headers/SASAdView.h"/>
-         <header-file src="src/ios/headers/SASAdViewDelegate.h"/>
-         <header-file src="src/ios/headers/SASBannerView.h"/>
-         <header-file src="src/ios/headers/SASInterstitialView.h"/>
-         <header-file src="src/ios/headers/SASMediationAd.h"/>
-         <header-file src="src/ios/headers/SmartAdServerAd.h"/>
+        <header-file src="src/ios/headers/SASAd.h"/>
+        <header-file src="src/ios/headers/SASAdChoicesView.h"/>
+        <header-file src="src/ios/headers/SASAdView.h"/>
+        <header-file src="src/ios/headers/SASAdViewContainerCell.h"/>
+        <header-file src="src/ios/headers/SASAdViewDelegate.h"/>
+        <header-file src="src/ios/headers/SASBannerView.h"/>
+        <header-file src="src/ios/headers/SASInterstitialView.h"/>
+        <header-file src="src/ios/headers/SASMediationAd.h"/>
+        <header-file src="src/ios/headers/SASNativeAd.h"/>
+        <header-file src="src/ios/headers/SASNativeAdDelegate.h"/>
+        <header-file src="src/ios/headers/SASNativeAdImage.h"/>
+        <header-file src="src/ios/headers/SASNativeAdManager.h"/>
+        <header-file src="src/ios/headers/SASNativeAdMediaView.h"/>
+        <header-file src="src/ios/headers/SASNativeAdMediaViewDelegate.h"/>
+        <header-file src="src/ios/headers/SASNativeAdPlacement.h"/>
+        <header-file src="src/ios/headers/SASVideoEvent.h"/>
 
-         <source-file src="src/ios/libSmartAdServer.a" framework="true"/>
-         <resource-file src="src/ios/sas.bundle"/>
+        <source-file src="src/ios/libSmartAdServer.a" framework="true"/>
+        <resource-file src="src/ios/sas.bundle"/>
 
-        <framework src="AdSupport.framework" weak="true"/>
+        <framework src="Accelerate.framework" />
+        <framework src="AdSupport.framework" />
+        <framework src="AVFoundation.framework" />
         <framework src="CoreGraphics.framework"/>
         <framework src="CoreLocation.framework"/>
-        <framework src="CoreMotion.framework" weak="true"/>
-        <framework src="EventKit.framework"/>
-        <framework src="EventKitUI.framework"/>
+        <framework src="CoreMedia.framework"/>
+        <framework src="CoreMotion.framework" />
         <framework src="Foundation.framework"/>
         <framework src="MediaPlayer.framework"/>
         <framework src="QuartzCore.framework"/>
+        <framework src="SafariServices.framework" weak="true" />
+        <framework src="SceneKit.framework" weak="true" />
+        <framework src="SpriteKit.framework" weak="true" />
         <framework src="StoreKit.framework"/>
         <framework src="SystemConfiguration.framework"/>
         <framework src="UIKit.framework"/>
+        <framework src="WebKit.framework"/>
     </platform>
 </plugin>
