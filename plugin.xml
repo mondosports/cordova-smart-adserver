@@ -90,6 +90,7 @@
         <header-file src="src/ios/headers/SASNativeAdMediaView.h"/>
         <header-file src="src/ios/headers/SASNativeAdMediaViewDelegate.h"/>
         <header-file src="src/ios/headers/SASNativeAdPlacement.h"/>
+        <header-file src="src/ios/headers/SASReward.h"/>
         <header-file src="src/ios/headers/SASVideoEvent.h"/>
 
         <source-file src="src/ios/libSmartAdServer.a" framework="true"/>
