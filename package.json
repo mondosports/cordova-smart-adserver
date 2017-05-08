@@ -1,0 +1,58 @@
+{
+  "name": "cordova-plugin-smartadserver",
+  "version": "2.0.0",
+  "description": "Ultimate Cordova Plugin for Smart AdServer to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.",
+  "cordova": {
+    "id": "cordova-plugin-smartadserver",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondosports/cordova-smart-adserver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/floatinghotpot/cordova-smart-adserver/issues"
+  },
+  "keywords": [
+    "cordova",
+    "smart",
+    "plugin",
+    "phonegap",
+    "intel-xdk",
+    "intel",
+    "xdk",
+    "crosswalk",
+    "ionic",
+    "meteor",
+    "ad",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "ads",
+    "eclipse",
+    "android-studio",
+    "simple",
+    "easy",
+    "android",
+    "ios",
+    "windows",
+    "phonegap",
+    "monetization",
+    "monetisation",
+    "money",
+    "banner",
+    "interstitial",
+    "advertisement",
+    "advertising",
+    "earn",
+    "cordova-smart-adserver",
+    "smart-adserver"
+  ],
+  "author": {
+    "name": "Liming Xie"
+  },
+  "license": "MIT"
+}
