@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="cordova-plugin-smart-adserver"
-	version="1.0.2">
+	version="1.0.3">
 
     <name>Smart Ad Server</name>
 	<description>Cordova/PhoneGap Plugin for Smart Ad Server</description>
@@ -45,8 +45,7 @@
             </feature>
         </config-file>
         <source-file src="src/android/SmartAdServerPlugin.java" target-dir="src/com/rjfun/cordova/smartadserver" />
-        <source-file src="src/android/SmartAdServer-Android-SDK-6.6.jar" target-dir="libs" />
-        <source-file src="src/android/SmartAdServer-Android-SDK-6.6.aar" target-dir="libs" />
+        <source-file src="src/android/SmartAdServer-Android-SDK-6.9.aar" target-dir="libs" />
      </platform>
 
     <!-- ios -->
@@ -81,6 +80,8 @@
         <header-file src="src/ios/headers/SASAdViewContainerCell.h"/>
         <header-file src="src/ios/headers/SASAdViewDelegate.h"/>
         <header-file src="src/ios/headers/SASBannerView.h"/>
+        <header-file src="src/ios/headers/SASBidderAdapter.h"/>
+        <header-file src="src/ios/headers/SASBidderAdapterProtocol.h"/>
         <header-file src="src/ios/headers/SASInterstitialView.h"/>
         <header-file src="src/ios/headers/SASMediationAd.h"/>
         <header-file src="src/ios/headers/SASNativeAd.h"/>
@@ -91,6 +92,9 @@
         <header-file src="src/ios/headers/SASNativeAdMediaViewDelegate.h"/>
         <header-file src="src/ios/headers/SASNativeAdPlacement.h"/>
         <header-file src="src/ios/headers/SASReward.h"/>
+        <header-file src="src/ios/headers/SASRewardedVideo.h"/>
+        <header-file src="src/ios/headers/SASRewardedVideoDelegate.h"/>
+        <header-file src="src/ios/headers/SASRewardedVideoPlacement.h"/>
         <header-file src="src/ios/headers/SASVideoEvent.h"/>
 
         <source-file src="src/ios/libSmartAdServer.a" framework="true"/>
