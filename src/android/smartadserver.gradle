@@ -1,0 +1,13 @@
+repositories {
+    maven {
+        name "SmartAdServer's maven repo"
+    	url "https://packagecloud.io/smartadserver/android/maven2"
+   }
+}
+
+cdvPluginPostBuildExtras.add({
+
+	dependencies {
+	    compile 'com.smartadserver.android:displaylibrary:6.9.1@aar'
+	}
+});
