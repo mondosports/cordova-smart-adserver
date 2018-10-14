@@ -98,11 +98,11 @@
     }
 
     UIView * parentView = [self getView];
+    int adHeight = BANNER_AD_HEIGHT;
     if ([self.mAdSize isEqualToString:@"LARGE_BANNER"]){
-        CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, LARGE_BANNER_AD_HEIGHT);
-    } else {
-        CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, BANNER_AD_HEIGHT);
+        adHeight = LARGE_BANNER_AD_HEIGHT;
     }
+    CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, adHeight);
     SASBannerView *ad = [[SASBannerView alloc] initWithFrame:rect
                                                       loader:SASLoaderActivityIndicatorStyleWhite];
 
