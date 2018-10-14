@@ -18,11 +18,13 @@
 
 #define BANNER_AD_WIDTH         320
 #define BANNER_AD_HEIGHT        50
+#define LARGE_BANNER_AD_HEIGHT  100
 
 @interface SmartAdServerPlugin()<SASAdViewDelegate>
 
 @property (assign) int mSiteId;
 @property (nonatomic, retain) NSString* mBaseURL;
+@property (nonatomic, retain) NSString* mAdSize;
 
 @property (nonatomic, retain) NSString* mBannerPageId;
 @property (assign) int mBannerFormatId;
@@ -73,6 +75,9 @@
     str = [options objectForKey:OPT_BASE_URL];
     if(str) self.mBaseURL = str;
 
+    str = [options objectForKey:OPT_AD_SIZE];
+    if(str) self.mAdSize = str;
+
     [SASAdView setSiteID:self.mSiteId baseURL:self.mBaseURL];
 }
 
@@ -93,7 +98,11 @@
     }
 
     UIView * parentView = [self getView];
-    CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, BANNER_AD_HEIGHT);
+    if ([self.mAdSize isEqualToString:@"LARGE_BANNER"]){
+        CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, LARGE_BANNER_AD_HEIGHT);
+    } else {
+        CGRect rect = CGRectMake(0, 0, parentView.frame.size.width, BANNER_AD_HEIGHT);
+    }
     SASBannerView *ad = [[SASBannerView alloc] initWithFrame:rect
                                                       loader:SASLoaderActivityIndicatorStyleWhite];
 

@@ -9,6 +9,7 @@
 
 #define OPT_SITE_ID     @"siteId"
 #define OPT_BASE_URL    @"baseURL"
+#define OPT_AD_SIZE     @"adSize"
 
 @interface SmartAdServerPlugin : GenericAdPlugin
 
