@@ -13,7 +13,7 @@ cdvPluginPostBuildExtras.add({
 		implementation 'com.smartadserver.android:smart-display-sdk:6.10.1@aar'
 
 		// Add dependencies required by Smart Display SDK
-		implementation 'com.google.android.gms:play-services-ads-identifier:+'
+		implementation 'com.google.android.gms:play-services-ads-identifier:11.8.+'
 		implementation 'com.google.android.gms:play-services-location:+'
 	}
 });
