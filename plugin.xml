@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="cordova-plugin-smart-adserver"
-	version="1.0.6">
+	version="1.1.1">
 
     <name>Smart Ad Server</name>
 	<description>Cordova/PhoneGap Plugin for Smart Ad Server</description>
@@ -14,7 +14,7 @@
     <issue>https://github.com/floatinghotpot/cordova-smart-adserver/issues</issue>
 
 	<engines>
-	    <engine name="cordova" version=">=3.0" />
+	    <engine name="cordova" version=">=4.0" />
 	</engines>
 
     <js-module src="www/SmartAdServer.js" name="SmartAdServer">
@@ -22,6 +22,7 @@
     </js-module>
 
 	<dependency id="cordova-plugin-extension" />
+    <dependency id="cordova-plugin-cocoapod-support" />
 
     <!-- android -->
     <platform name="android">
@@ -52,9 +53,9 @@
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-        <feature name="SmartAdServer">
-            <param name="ios-package" value="SmartAdServerPlugin" />
-        </feature>
+            <feature name="SmartAdServer">
+                <param name="ios-package" value="SmartAdServerPlugin" />
+            </feature>
         </config-file>
 
         <config-file target="*-Info.plist" parent="CFBundleAllowMixedLocalizations">
@@ -72,51 +73,6 @@
             </array>
         </config-file>
 
-        <header-file src="src/ios/SmartAdServerPlugin.h"/>
-        <source-file src="src/ios/SmartAdServerPlugin.m"/>
-
-        <header-file src="src/ios/headers/SASAd.h"/>
-        <header-file src="src/ios/headers/SASAdChoicesView.h"/>
-        <header-file src="src/ios/headers/SASAdView.h"/>
-        <header-file src="src/ios/headers/SASAdViewContainerCell.h"/>
-        <header-file src="src/ios/headers/SASAdViewDelegate.h"/>
-        <header-file src="src/ios/headers/SASBannerView.h"/>
-        <header-file src="src/ios/headers/SASBidderAdapter.h"/>
-        <header-file src="src/ios/headers/SASBidderAdapterProtocol.h"/>
-        <header-file src="src/ios/headers/SASInterstitialView.h"/>
-        <header-file src="src/ios/headers/SASMediationAd.h"/>
-        <header-file src="src/ios/headers/SASNativeAd.h"/>
-        <header-file src="src/ios/headers/SASNativeAdDelegate.h"/>
-        <header-file src="src/ios/headers/SASNativeAdImage.h"/>
-        <header-file src="src/ios/headers/SASNativeAdManager.h"/>
-        <header-file src="src/ios/headers/SASNativeAdMediaView.h"/>
-        <header-file src="src/ios/headers/SASNativeAdMediaViewDelegate.h"/>
-        <header-file src="src/ios/headers/SASNativeAdPlacement.h"/>
-        <header-file src="src/ios/headers/SASReward.h"/>
-        <header-file src="src/ios/headers/SASRewardedVideo.h"/>
-        <header-file src="src/ios/headers/SASRewardedVideoDelegate.h"/>
-        <header-file src="src/ios/headers/SASRewardedVideoPlacement.h"/>
-        <header-file src="src/ios/headers/SASVideoEvent.h"/>
-
-        <source-file src="src/ios/libSmartAdServer.a" framework="true"/>
-        <resource-file src="src/ios/sas.bundle"/>
-
-        <framework src="Accelerate.framework" />
-        <framework src="AdSupport.framework" />
-        <framework src="AVFoundation.framework" />
-        <framework src="CoreGraphics.framework"/>
-        <framework src="CoreLocation.framework"/>
-        <framework src="CoreMedia.framework"/>
-        <framework src="CoreMotion.framework" />
-        <framework src="Foundation.framework"/>
-        <framework src="MediaPlayer.framework"/>
-        <framework src="QuartzCore.framework"/>
-        <framework src="SafariServices.framework" weak="true" />
-        <framework src="SceneKit.framework" weak="true" />
-        <framework src="SpriteKit.framework" weak="true" />
-        <framework src="StoreKit.framework"/>
-        <framework src="SystemConfiguration.framework"/>
-        <framework src="UIKit.framework"/>
-        <framework src="WebKit.framework"/>
+        <pod name="Smart-Display-SDK" />
     </platform>
 </plugin>

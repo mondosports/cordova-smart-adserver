@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-smart-adserver",
-  "version": "1.0.6",
+  "version": "1.1.1",
   "description": "Ultimate Cordova Plugin for Smart AdServer to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.",
   "cordova": {
     "id": "cordova-plugin-smart-adserver",
